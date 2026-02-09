@@ -1,4 +1,2 @@
-ptz01-power-standby.sh
-ptz02-power-on.sh
-ptz02-power-standby.sh
-ptz02-power-on.sh
+web-scripts/*-power-standby.sh
+web-scripts/*-power-on.sh
