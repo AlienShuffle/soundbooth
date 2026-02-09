@@ -9,6 +9,7 @@ function link_file() {
     local dst="$2"
     if [ -f "$dst" ]; then
         echo "File $dst already exists. deleting link." >&2
+        rm "$dst"
     fi
     ln "$src" "$dst"
     chmod +x "$dst"
