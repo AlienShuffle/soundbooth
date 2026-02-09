@@ -15,9 +15,9 @@
     sleep 1
     echo -ne "mess Route 1 to 17-20\r\n"
     sleep 1
-    #echo -ne "showhw\r\n"
-    #sleep 1
     echo -ne "setvideoroute 1 17-20\r\n"
+    sleep 1
+    echo -ne "showhw\r\n"
     sleep 1
     echo -ne "mess Route complete\r\n"
     sleep 2
