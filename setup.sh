@@ -25,3 +25,8 @@ else
     echo "Error: $basefile file not found, needed to setup environment." >&2
     exit 1
 fi
+
+sudo chown -R root:www-data /opt/web-scripts
+sudo chmod 750 /opt/web-scripts
+sudo chmod 750 /opt/web-scripts/*.sh
+
