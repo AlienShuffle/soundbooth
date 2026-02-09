@@ -47,3 +47,6 @@ sudo chmod -R 750 /opt/web-scripts
 sudo cp ./cgi-bin/* /usr/lib/cgi-bin/
 sudo chown -R root:www-data /usr/lib/cgi-bin
 sudo chmod -R 750 /usr/lib/cgi-bin
+
+# install apache home page setup.
+sudo cp sites-available/000-default.conf /etc/apache2/sites-available/
