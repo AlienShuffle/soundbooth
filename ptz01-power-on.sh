@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-camera=$(basename $0 | cut -d- -f1)
+# assume command format is camera-script-name.sh
+camera="$(basename $0 | cut -d- -f1).cbclocal"
+viscaPort=5678
 cmd=$(basename $0 | cut -d- -f2- | cut -d. -f1)
 
 case "$cmd" in
@@ -14,13 +16,25 @@ case "$cmd" in
     exit 1
     ;;
 esac
-resp=$(./send-visca.sh "$camera.cbclocal" $cmdString)
 
-# need to figure out how to parse to verify success. the 2s maybe variable.
-if [ "$resp" = "9042ff9052ff" ]; then
+# Build binary command
+TMP=$(mktemp)
+echo -n "$cmdString" | xxd -r -p >"$TMP"
+echo "Sending VISCA command to $camera:$viscaPort $cmdString" >&2
+# Send + receive over the same TCP connection
+# -w2 = 2-second timeout waiting for response
+resp=$(nc -w2 "$camera" "$viscaPort" <"$TMP" | xxd -p)
+# xxd -p converts binary response to hex string for display on stdout.
+rm -f "$TMP"
+
+case "$resp" in
+"9041ff9051ff" | "9042ff9052ff")
     echo "$0: succesful" >&2
     exit 0
-else
+    ;;
+
+*)
     echo "$0: error: $resp" >&2
     exit 1
-fi
+    ;;
+esac
