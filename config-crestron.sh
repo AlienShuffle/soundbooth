@@ -13,13 +13,13 @@
     sleep 1
     echo -ne "echo off\r\n"
     sleep 1
-    echo -ne "mess Starting...\r\n"
+    echo -ne "mess Route 1 to 17-20\r\n"
     sleep 1
-    echo -ne "showhw\r\n"
-    sleep 1
+    #echo -ne "showhw\r\n"
+    #sleep 1
     echo -ne "setvideoroute 1 17-20\r\n"
     sleep 1
-    echo -ne "mess Route 1 to 17-20\r\n"
+    echo -ne "mess Route complete\r\n"
     sleep 2
     echo -ne "mess\r\n"
     sleep 1
