@@ -40,11 +40,9 @@ function link_file() {
 )
 sudo cp ./web-scripts/*.sh /opt/web-scripts/
 sudo chown -R root:www-data /opt/web-scripts
-sudo chmod 750 /opt/web-scripts
-sudo chmod 750 /opt/web-scripts/*.sh
+sudo chmod -R 750 /opt/web-scripts
 
 # copy in the cgi script for the web interface
 sudo cp ./cgi-bin/* /usr/lib/cgi-bin/
 sudo chown -R root:www-data /usr/lib/cgi-bin
-sudo chmod 750 /usr/lib/cgi-bin
-sudo chmod 750 /usr/lib/cgi-bin/*.sh
+sudo chmod -R 750 /usr/lib/cgi-bin
