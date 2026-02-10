@@ -8,7 +8,11 @@ function link_file() {
     local src="$1"
     local dst="$2"
     if [ -f "$dst" ]; then
-        echo "File $dst already exists. deleting link." >&2
+        if diff "$src" "$dst" > /dev/null; then
+            #echo "File $dst already exists and is the same. skipping link." >&2
+            return
+        fi
+        echo "File $dst exists and is different. deleting link/file." >&2
         rm "$dst"
     fi
     ln "$src" "$dst"
