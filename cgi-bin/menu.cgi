@@ -1,62 +1,56 @@
-#!/bin/bash
-
-echo "Content-type: text/html"
-echo ""
-
-###########################################
-# EXECUTION WITH REAL STREAMING OUTPUT
-###########################################
 if [ -n "$QUERY_STRING" ]; then
     SCRIPT=$(echo "$QUERY_STRING" | sed 's/^run=//')
 
-    # --- HEADER (STATIC) ---
-    cat <<EOF
+cat <<EOF
 <html>
 <head>
 <title>Executing $SCRIPT</title>
 <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    body { font-family: monospace; background: #1e1e1e; color: #e0e0e0; padding: 20px; }
     .container {
-        background: #fff; max-width: 900px; margin: auto; padding: 25px;
-        border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background: #252526; padding: 20px;
+        border-radius: 8px; max-width: 900px; margin: auto;
+        box-shadow: 0 0 8px rgba(0,0,0,0.4);
     }
-    pre {
-        background: #eee; padding: 15px; white-space: pre-wrap;
-        border-radius: 5px; font-size: 14px;
-    }
+    pre { font-size: 15px; line-height: 1.4em; }
     a.button {
         display: inline-block; margin-top: 20px; padding: 10px 15px;
         background: #0275d8; color: white; text-decoration: none;
         border-radius: 5px; font-weight: bold;
     }
-    a.button:hover { background: #025aa5; }
 </style>
 </head>
+
 <body>
 <div class="container">
 <h2>Running: $SCRIPT.sh</h2>
-<pre>
-EOF
 
-    # --- STREAMING EXECUTION (LIVE OUTPUT) ---
-    stdbuf -o0 -e0 /opt/web-scripts/"$SCRIPT".sh 2>&1 | while IFS= read -r line; do
-        echo "$line<br>"
-        echo                 # helps Apache flush sooner
-    done
+<pre id="output">(waiting for output...)</pre>
 
-    # --- FOOTER (STATIC) ---
-    cat <<EOF
-</pre>
+<script>
+    var output = document.getElementById("output");
+    var source = new EventSource("cgi-bin//exec.cgi?run=$SCRIPT");
+
+    source.onmessage = function(e) {
+        if (e.data === "[DONE]") {
+            source.close();
+        } else {
+            output.textContent += e.data + "\\n";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    };
+</script>
+
 <br>
-<a href="/cgi-bin/menu.cgi" class="button">Back to Menu</a>
+/cgi-bin/menu.cgi" class="button">Back to Menu</a>
+
 </div>
 </body>
 </html>
 EOF
 
-    exit 0
+exit 0
 fi
-
 
 ###########################
 # MAIN MENU (STATIC HTML)
