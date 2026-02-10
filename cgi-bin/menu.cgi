@@ -36,7 +36,11 @@ if [ -n "$QUERY_STRING" ]; then
     var source = new EventSource("/cgi-bin/exec.cgi?run=$SCRIPT");
 
     source.onmessage = function(e) {
-        output.textContent += e.data + "\\n";
+        if (output.textContent === "[Waiting for output...]") {
+            output.textContent = "";
+        } else{
+            output.textContent += e.data + "\\n";
+        }
         window.scrollTo(0, document.body.scrollHeight);
         if (e.data === "[DONE]") source.close();
     };
