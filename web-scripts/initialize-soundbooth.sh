@@ -11,7 +11,6 @@ function run_script() {
     fi
 }
 
-run_script mojo-jojo
 run_script config-crestron.sh
 run_script ptz01-power-on.sh
 run_script ptz02-power-on.sh

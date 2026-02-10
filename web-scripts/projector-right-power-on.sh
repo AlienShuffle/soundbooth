@@ -36,7 +36,7 @@ else
     CMD="00${cmdString}\r"
 fi
 echo "$script: Sending command '$CMD' to projector" >&2
-respTwo=$(echo -e "$CMD" | nc -w 1 $device $port)
+respTwo=$(echo -e "$CMD" | nc -w 1 $device $port | tr -d '\r')
 
 echo "$script: Projector said: '$respTwo'" >&2
 

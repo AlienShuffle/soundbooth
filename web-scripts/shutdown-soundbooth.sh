@@ -1,4 +1,5 @@
 #!/bin/bash
+
 function run_script() {
     local script="$(basename $1)"
     local dst="/opt/web-scripts/$script"
