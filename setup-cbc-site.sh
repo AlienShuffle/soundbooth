@@ -47,6 +47,8 @@ function link_file() {
         exit 1
     fi
 )
+sudo rm -rf /opt/web-scripts
+sudo mkdir -p /opt/web-scripts
 sudo cp ./web-scripts/*.sh /opt/web-scripts/
 sudo chown -R root:www-data /opt/web-scripts
 sudo chmod -R 750 /opt/web-scripts
