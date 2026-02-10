@@ -3,10 +3,13 @@
 echo "Content-type: text/html"
 echo ""
 
-# If a script name was submitted, run it with live output
+###########################################
+# EXECUTION WITH REAL STREAMING OUTPUT
+###########################################
 if [ -n "$QUERY_STRING" ]; then
     SCRIPT=$(echo "$QUERY_STRING" | sed 's/^run=//')
 
+    # --- HEADER (STATIC) ---
     cat <<EOF
 <html>
 <head>
@@ -35,15 +38,16 @@ if [ -n "$QUERY_STRING" ]; then
 <pre>
 EOF
 
-    # Run the script and stream each line as it occurs
+    # --- STREAMING EXECUTION (LIVE OUTPUT) ---
     stdbuf -o0 -e0 /opt/web-scripts/"$SCRIPT".sh 2>&1 | while IFS= read -r line; do
-        echo "$line<br/>"
-        echo
+        echo "$line<br>"
+        echo                 # helps Apache flush sooner
     done
 
+    # --- FOOTER (STATIC) ---
     cat <<EOF
 </pre>
-<br/>
+<br>
 <a href="/cgi-bin/menu.cgi" class="button">Back to Menu</a>
 </div>
 </body>

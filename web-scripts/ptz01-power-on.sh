@@ -32,7 +32,6 @@ case "$resp" in
     echo "$0: succesful" >&2
     exit 0
     ;;
-
 *)
     echo "$0: error: $resp (likely already in $cmd state)" >&2
     exit 1
