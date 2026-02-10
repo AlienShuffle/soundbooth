@@ -47,7 +47,7 @@ if [ -n "$QUERY_STRING" ]; then
 </script>
 
 <br>
-/cgi-bin/menu.cgi" class="button">Back to Menu</a>
+<a href="/cgi-bin/menu.cgi" class="button">Back to Menu</a>
 
 </div>
 </body>
