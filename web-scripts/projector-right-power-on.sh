@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# assume command format is projector-script-name.sh
-IP="$(basename $0 | cut -d- -f1-2).cbclocal"
-PORT=1024
+# assume command format is projector-position-scrdevicet-name.sh
+device="$(basename $0 | cut -d- -f1-2).cbclocal"
+port=1024
 cmd=$(basename $0 | cut -d- -f3- | cut -d. -f1)
 
-echo "Sending command '$cmd' to projector at $IP:$PORT"
+echo "Sending command '$cmd' to projector at $device:$port"
 
 case "$cmd" in
 "power-on")
@@ -13,6 +13,9 @@ case "$cmd" in
 "power-standby")
     cmdString="POF"
     ;;
+"power-query")
+    cmdString="QPW"
+    ;;
 *)
     echo "$0: error: unknown command '$cmd'" >&2
     exit 1
@@ -20,7 +23,7 @@ case "$cmd" in
 esac
 
 # Open TCP session and capture the initial response
-RESP=$(echo | nc $IP $PORT | head -n1)
+RESP=$(echo | nc $device $port | head -n1)
 
 echo "Projector said: $RESP"
 
@@ -32,14 +35,19 @@ else
     CMD="00${cmdString}\r"
 fi
 
-respTwo=$(echo -e "$CMD" | nc $IP $PORT)
+respTwo=$(echo -e "$CMD" | nc $device $port)
+
+echo "Projector said: $respTwo"
 
 case "$respTwo" in
-"9041ff9051ff" | "9042ff9052ff")
-    echo "$0: succesful" >&2
+"001")
+    echo "$0: power is on" >&2
     exit 0
     ;;
-
+"000")
+    echo "$0: power is off (standby)" >&2
+    exit 0
+    ;;
 *)
     echo "$0: error: $resp" >&2
     exit 1

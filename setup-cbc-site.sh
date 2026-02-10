@@ -16,6 +16,7 @@ function link_file() {
     echo "Linked $src to $dst and made it executable." >&2
 }
 
+# create all the links for the power on/off scripts (one file for each camera and power state)
 (
     cd ./web-scripts
     basefile=./ptz01-power-on.sh
@@ -30,10 +31,13 @@ function link_file() {
     basefile=./projector-right-power-on.sh
     if [ -f "$basefile" ]; then
         link_file "$basefile" ./projector-right-power-standby.sh
+        link_file "$basefile" ./projector-right-power-query.sh
         link_file "$basefile" ./projector-rear-power-on.sh
         link_file "$basefile" ./projector-rear-power-standby.sh
+        link_file "$basefile" ./projector-rear-power-query.sh
         link_file "$basefile" ./projector-left-power-on.sh
         link_file "$basefile" ./projector-left-power-standby.sh
+        link_file "$basefile" ./projector-left-power-query.sh
     else
         echo "Error: $basefile file not found, needed to setup environment." >&2
         exit 1
