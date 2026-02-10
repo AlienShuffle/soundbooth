@@ -94,7 +94,6 @@ cat <<EOF
 
 <body>
 <div class="container">
-
 <h1>CBC Soundbooth Control</h1>
 
 <!-- SOUND BOOTH -->
@@ -106,20 +105,20 @@ cat <<EOF
 </div>
 
 <!-- PTZ CAMERAS -->
-<div class="section-title">PTZ01 Camera</div>
+<div class="section-title">Camera - PTZ01</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-on" class="cmd-btn">PTZ01 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-standby" class="cmd-btn">PTZ01 Standby</a>
     <a href="http://ptz01.cbclocal" target="_blank" class="cmd-btn">PTZ01 App</a>
 </div>
-<div class="section-title">PTZ02 Camera</div>
+
+<div class="section-title">Camera - PTZ02</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-on" class="cmd-btn">PTZ02 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-standby" class="cmd-btn">PTZ02 Standby</a>
     <a href="http://ptz02.cbclocal" target="_blank" class="cmd-btn">PTZ02 App</a>
 </div>
 
-<!-- PROJECTORS LEFT -->
 <div class="section-title">Projector - Left</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=projector-left-power-on" class="cmd-btn">Power On</a>
@@ -128,7 +127,6 @@ cat <<EOF
     <a href="http://projector-left.cbclocal" target="_blank" class="cmd-btn">Left App</a>
 </div>
 
-<!-- PROJECTORS RIGHT -->
 <div class="section-title">Projector - Right</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=projector-right-power-on" class="cmd-btn">Power On</a>
@@ -137,7 +135,6 @@ cat <<EOF
      <a href="http://projector-right.cbclocal" target="_blank" class="cmd-btn">Right App</a>
 </div>
 
-<!-- PROJECTORS REAR -->
 <div class="section-title">Projector - Rear</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=projector-rear-power-on" class="cmd-btn">Power On</a>
@@ -146,8 +143,6 @@ cat <<EOF
      <a href="http://projector-rear.cbclocal" target="_blank" class="cmd-btn">Rear App</a>
 </div>
 
-
-<!-- MAINTENANCE -->
 <div class="section-title">Maintenance</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=backup" class="cmd-btn">Run Backup</a>
