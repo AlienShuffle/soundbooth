@@ -79,8 +79,8 @@ cat <<EOF
     }
 
     .button-grid {
-        display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 12px; margin-top: 15px;
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 12px; margin-top: 12px;
     }
 
     a.cmd-btn {
@@ -100,8 +100,8 @@ cat <<EOF
 <!-- SOUND BOOTH -->
 <div class="section-title">Soundbooth (Crestron, Cameras, Projectors)</div>
 <div class="button-grid">
-    <a href="/cgi-bin/menu.cgi?run=initialize-soundbooth" class="cmd-btn">Initialize Soundbooth</a>
-    <a href="/cgi-bin/menu.cgi?run=shutdown-soundbooth" class="cmd-btn">Shutdown Soundbooth</a>
+    <a href="/cgi-bin/menu.cgi?run=initialize-soundbooth" class="cmd-btn">Initialize Soundbooth (all)</a>
+    <a href="/cgi-bin/menu.cgi?run=shutdown-soundbooth" class="cmd-btn">Standby Soundbooth</a>
     <a href="/cgi-bin/menu.cgi?run=config-crestron" class="cmd-btn">Configure Crestron</a>
 </div>
 
@@ -110,11 +110,13 @@ cat <<EOF
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-on" class="cmd-btn">PTZ01 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-standby" class="cmd-btn">PTZ01 Standby</a>
+    <a href="http://ptz01.cbclocal" class="cmd-btn">PTZ01 App</a>
 </div>
 <div class="section-title">PTZ02 Camera</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-on" class="cmd-btn">PTZ02 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-standby" class="cmd-btn">PTZ02 Standby</a>
+    <a href="http://ptz02.cbclocal" class="cmd-btn">PTZ02 App</a>
 </div>
 
 <!-- PROJECTORS LEFT -->
@@ -123,6 +125,7 @@ cat <<EOF
     <a href="/cgi-bin/menu.cgi?run=projector-left-power-on" class="cmd-btn">Power On</a>
     <a href="/cgi-bin/menu.cgi?run=projector-left-power-standby" class="cmd-btn">Standby</a>
     <a href="/cgi-bin/menu.cgi?run=projector-left-power-query" class="cmd-btn">Power Query</a>
+    <a href="http://projector-left.cbclocal" class="cmd-btn">Left App</a>
 </div>
 
 <!-- PROJECTORS RIGHT -->
@@ -131,6 +134,7 @@ cat <<EOF
     <a href="/cgi-bin/menu.cgi?run=projector-right-power-on" class="cmd-btn">Power On</a>
     <a href="/cgi-bin/menu.cgi?run=projector-right-power-standby" class="cmd-btn">Standby</a>
     <a href="/cgi-bin/menu.cgi?run=projector-right-power-query" class="cmd-btn">Power Query</a>
+     <a href="http://projector-right.cbclocal" class="cmd-btn">Right App</a>
 </div>
 
 <!-- PROJECTORS REAR -->
@@ -139,6 +143,7 @@ cat <<EOF
     <a href="/cgi-bin/menu.cgi?run=projector-rear-power-on" class="cmd-btn">Power On</a>
     <a href="/cgi-bin/menu.cgi?run=projector-rear-power-standby" class="cmd-btn">Standby</a>
     <a href="/cgi-bin/menu.cgi?run=projector-rear-power-query" class="cmd-btn">Power Query</a>
+     <a href="http://projector-rear.cbclocal" class="cmd-btn">Rear App</a>
 </div>
 
 
