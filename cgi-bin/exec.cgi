@@ -9,7 +9,7 @@ echo "Cache-Control: no-cache"
 echo ""
 
 # Announce start
-echo "data: "
+#echo "data: "
 echo "data: Starting $SCRIPT.sh..."
 
 # Execute script and stream its output
