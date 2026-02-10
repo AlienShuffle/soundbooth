@@ -23,20 +23,30 @@ esac
 
 # Open TCP session and capture the initial response
 echo "$script: Sending command to projector $device ($cmd)" >&2
-#echo "opening port $port to projector $device" >&2
-respOne=$(echo | nc -w 1 $device $port | head -n1)
 
-echo "$script: Projector said: $respOne" >&2
+respTwo=$(
+    echo "$script: Connecting to projector at $device:$port" >&2
+    {
+        # Read the projector banner
+        read BANNER
+        echo "$script: Projector said: $BANNER" >&2
 
-if [[ "$respOne" =~ "NTCONTROL 1" ]]; then
-    RAND=$(echo "$respOne" | awk '{print $3}')
-    HASH=$(echo -n "CBCADMIN:CALVARY:$RAND" | md5sum | awk '{print $1}')
-    CMD="00${HASH}${cmdString}\r"
-else
-    CMD="00${cmdString}\r"
-fi
-echo "$script: Sending command '$CMD' to projector" >&2
-respTwo=$(echo -e "$CMD" | nc -w 1 $device $port | tr -d '\r')
+        if [[ "$BANNER" =~ "NTCONTROL 1" ]]; then
+            RAND=$(echo "$BANNER" | awk '{print $3}')
+            HASH=$(echo -n "CBCADMIN:CALVARY:$RAND" | md5sum | awk '{print $1}')
+            CMD="00${HASH}${cmdString}\r"
+        else
+            CMD="00${cmdString}\r"
+        fi
+
+        echo "$script: Sending command '$CMD' to projector" >&2
+
+        # Send command
+        echo -en "$CMD"
+
+        # Keep reading until projector closes connection or timeout
+    } | nc -N $device $port
+)
 
 echo "$script: Projector said: '$respTwo'" >&2
 
