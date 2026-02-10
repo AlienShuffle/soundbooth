@@ -15,14 +15,20 @@ function link_file() {
         echo "File $dst exists and is different. deleting link/file." >&2
         rm "$dst"
     fi
-    ln "$src" "$dst"
-    chmod +x "$dst"
-    echo "Linked $src to $dst and made it executable." >&2
+    sudo ln "$src" "$dst"
+    #chmod +x "$dst"
+    echo "Linked $src to $dst." >&2
 }
+
+sudo rm -rf /opt/web-scripts
+sudo mkdir -p /opt/web-scripts
+sudo cp ./web-scripts/*.sh /opt/web-scripts/
+# temporarily make readable so we can do linking.
+sudo chmod -R 755 /opt/web-scripts
 
 # create all the links for the power on/off scripts (one file for each camera and power state)
 (
-    cd ./web-scripts
+    cd /opt/web-scripts
     basefile=./ptz01-power-on.sh
     if [ -f "$basefile" ]; then
         link_file "$basefile" ./ptz01-power-standby.sh
@@ -47,16 +53,14 @@ function link_file() {
         exit 1
     fi
 )
-sudo rm -rf /opt/web-scripts
-sudo mkdir -p /opt/web-scripts
-sudo cp ./web-scripts/*.sh /opt/web-scripts/
+
 sudo chown -R root:www-data /opt/web-scripts
-sudo chmod -R 750 /opt/web-scripts
+sudo chmod -R 755 /opt/web-scripts
 
 # copy in the cgi script for the web interface
 sudo cp ./cgi-bin/* /usr/lib/cgi-bin/
 sudo chown -R root:www-data /usr/lib/cgi-bin
-sudo chmod -R 750 /usr/lib/cgi-bin
+sudo chmod -R 755 /usr/lib/cgi-bin
 
 # install apache home page setup.
 sudo cp sites-available/000-default.conf /etc/apache2/sites-available/
