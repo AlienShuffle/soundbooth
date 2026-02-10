@@ -1,7 +1,12 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo ""
+
 if [ -n "$QUERY_STRING" ]; then
     SCRIPT=$(echo "$QUERY_STRING" | sed 's/^run=//')
 
-cat <<EOF
+    cat <<EOF
 <html>
 <head>
 <title>Executing $SCRIPT</title>
@@ -49,7 +54,7 @@ cat <<EOF
 </html>
 EOF
 
-exit 0
+    exit 0
 fi
 
 ###########################
