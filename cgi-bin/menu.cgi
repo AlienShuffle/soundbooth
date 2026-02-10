@@ -107,6 +107,7 @@ cat <<EOF
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-on" class="cmd-btn">PTZ01 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-standby" class="cmd-btn">PTZ01 Standby</a>
+</div>
 <div class="section-title">PTZ02 Camera</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-on" class="cmd-btn">PTZ02 Power On</a>
