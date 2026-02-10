@@ -8,10 +8,11 @@ if [ -n "$QUERY_STRING" ]; then
     SCRIPT=$(echo "$QUERY_STRING" | sed 's/^run=//')
     OUTPUT=$("/opt/web-scripts/$SCRIPT.sh" 2>&1)
 
+    # create the command execution results page
     cat <<EOF
 <html>
 <head>
-<title>Command Execution</title>
+<title>Command Execution Results</title>
 <style>
     body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
     .container {
@@ -34,7 +35,7 @@ if [ -n "$QUERY_STRING" ]; then
 <div class="container">
     <h2>Executed: $SCRIPT.sh</h2>
     <pre>$OUTPUT</pre>
-    /cgi-bin/menu.cgiBack to Menu</a>
+    <a href="/cgi-bin/menu.cgi" class="button">Back to Menu</a>
 </div>
 </body>
 </html>
@@ -46,7 +47,7 @@ fi
 cat <<EOF
 <html>
 <head>
-<title>System Control Menu</title>
+<title>Soundbooth</title>
 <style>
     body { font-family: Arial, sans-serif; background: #eef1f5; padding: 20px; }
     .container {
@@ -82,52 +83,51 @@ cat <<EOF
 <!-- SOUND BOOTH -->
 <div class="section-title">Soundbooth</div>
 <div class="button-grid">
-    /cgi-bin/menu.cgi?run=initial-soundboothInitialize Soundbooth</a>
-    /cgi-bin/menu.cgi?run=shutdown-soundboothShutdown Soundbooth</a>
-    /cgi-bin/menu.cgi?run=config-crestronConfigure Crestron</a>
+    <a href="/cgi-bin/menu.cgi?run=initial-soundbooth" class="cmd-btn">Initialize Soundbooth</a>
+    <a href="/cgi-bin/menu.cgi?run=shutdown-soundbooth" class="cmd-btn">Shutdown Soundbooth</a>
+    <a href="/cgi-bin/menu.cgi?run=config-crestron" class="cmd-btn">Configure Crestron</a>
 </div>
 
 <!-- PTZ CAMERAS -->
 <div class="section-title">PTZ Cameras</div>
 <div class="button-grid">
-    /cgi-bin/menu.cgi?run=ptz01-power-onPTZ01 Power On</a>
-    /cgi-bin/menu.cgi?run=ptz01-power-standbyPTZ01 Standby</a>
-    /cgi-bin/menu.cgi?run=ptz02-power-onPTZ02 Power On</a>
-    /cgi-bin/menu.cgi?run=ptz02-power-standbyPTZ02 Standby</a>
+    <a href="/cgi-bin/menu.cgi?run=ptz01-power-on" class="cmd-btn">PTZ01 Power On</a>
+    <a href="/cgi-bin/menu.cgi?run=ptz01-power-standby" class="cmd-btn">PTZ01 Standby</a>
+    <a href="/cgi-bin/menu.cgi?run=ptz02-power-on" class="cmd-btn">PTZ02 Power On</a>
+    <a href="/cgi-bin/menu.cgi?run=ptz02-power-standby" class="cmd-btn">PTZ02 Standby</a>
 </div>
 
 <!-- PROJECTORS LEFT -->
-<div class="section-title">Projector – Left</div>
+<div class="section-title">Projector - Left</div>
 <div class="button-grid">
-    /cgi-bin/menu.cgi?run=projector-left-power-onPower On</a>
-    /cgi-bin/menu.cgi?run=projector-left-power-standbyStandby</a>
-    /cgi-bin/menu.cgi?run=projector-left-power-queryPower Query</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-left-power-on" class="cmd-btn">Power On</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-left-power-standby" class="cmd-btn">Standby</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-left-power-query" class="cmd-btn">Power Query</a>
 </div>
 
 <!-- PROJECTORS RIGHT -->
-<div class="section-title">Projector – Right</div>
+<div class="section-title">Projector - Right</div>
 <div class="button-grid">
-    /cgi-bin/menu.cgi?run=projector-right-power-onPower On</a>
-    /cgi-bin/menu.cgi?run=projector-right-power-standbyStandby</a>
-    /cgi-bin/menu.cgi?run=projector-right-power-queryPower Query</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-right-power-on" class="cmd-btn">Power On</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-right-power-standby" class="cmd-btn">Standby</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-right-power-query" class="cmd-btn">Power Query</a>
 </div>
 
 <!-- PROJECTORS REAR -->
-<div class="section-title">Projector – Rear</div>
+<div class="section-title">Projector - Rear</div>
 <div class="button-grid">
-    /cgi-bin/menu.cgi?run=projector-rear-power-onPower On</a>
-    /cgi-bin/menu.cgi?run=projector-rear-power-standbyStandby</a>
-    /cgi-bin/menu.cgi?run=projector-rear-power-queryPower Query</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-rear-power-on" class="cmd-btn">Power On</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-rear-power-standby" class="cmd-btn">Standby</a>
+    <a href="/cgi-bin/menu.cgi?run=projector-rear-power-query" class="cmd-btn">Power Query</a>
 </div>
-
 
 
 <!-- MAINTENANCE -->
 <div class="section-title">Maintenance</div>
 <div class="button-grid">
-    /cgi-bin/menu.cgi?run=backupRun Backup</a>
-    /cgi-bin/menu.cgi?run=cleanupCleanup Logs</a>
-    /cgi-bin/menu.cgi?run=restartRestart Service</a>
+    <a href="/cgi-bin/menu.cgi?run=backup" class="cmd-btn">Run Backup</a>
+    <a href="/cgi-bin/menu.cgi?run=cleanup" class="cmd-btn">Cleanup Logs</a>
+    <a href="/cgi-bin/menu.cgi?run=restart" class="cmd-btn">Restart Service</a>
 </div>
 </div>
 </body>
