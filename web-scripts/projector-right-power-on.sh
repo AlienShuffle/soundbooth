@@ -1,70 +1,55 @@
 #!/usr/bin/env bash
-# assume command format is projector-position-scrdevicet-name.sh
+# PJLink control script for Panasonic VMZ71/VMZ51 series
+
 device="$(basename $0 | cut -d- -f1-2).cbclocal"
-port=1024
 cmd=$(basename $0 | cut -d- -f3- | cut -d. -f1)
-script=$(basename $0)
+script=$(basename "$0")
+port=4352
 
 case "$cmd" in
-"power-on")
-    cmdString="PON"
-    ;;
-"power-standby")
-    cmdString="POF"
-    ;;
-"power-query")
-    cmdString="QPW"
-    ;;
-*)
-    echo "$script: error: unknown command '$cmd'" >&2
-    exit 1
-    ;;
+    power-on)
+        pjcmd="%1POWR 1\r"
+        ;;
+    power-standby)
+        pjcmd="%1POWR 0\r"
+        ;;
+    power-query)
+        pjcmd="%1POWR ?\r"
+        ;;
+    *)
+        echo "$script: error: unknown command '$cmd'" >&2
+        exit 1
+        ;;
 esac
 
-# Open TCP session and capture the initial response
-echo "$script: Sending command to projector $device ($cmd)" >&2
+echo "$script: sending PJLINK command to $device ($cmd)" >&2
 
-respTwo=$(
-    echo "$script: Connecting to projector at $device:$port" >&2
-    {
-        # Read the projector banner
-        read BANNER
-        echo "$script: Projector said: $BANNER" >&2
+# Send the PJLink command over TCP and capture the response
+resp=$(echo -ne "$pjcmd" | nc -w2 "$device" "$port" | tr -d '\r')
 
-        if [[ "$BANNER" =~ "NTCONTROL 1" ]]; then
-            RAND=$(echo "$BANNER" | awk '{print $3}')
-            HASH=$(echo -n "CBCADMIN:CALVARY:$RAND" | md5sum | awk '{print $1}')
-            CMD="00${HASH}${cmdString}\r"
-        else
-            CMD="00${cmdString}\r"
-        fi
+#echo "$script: response: '$resp'" >&2
 
-        echo "$script: Sending command '$CMD' to projector" >&2
-
-        # Send command
-        echo -en "$CMD"
-
-        # Keep reading until projector closes connection or timeout
-    } | nc -N $device $port
-)
-
-echo "$script: Projector said: '$respTwo'" >&2
-
-case "$respTwo" in
-"001")
-    echo "$script: power is on" >&2
-    exit 0
-    ;;
-"000")
-    echo "$script: power is off (standby)" >&2
-    exit 0
-    ;;
-"")
-    echo "$script: empty response" >&2
-    exit 0
-    ;;
-*)
-    echo "$script: error: unknown response '$respTwo'" >&2
-    exit 1
-    ;;
+# Interpret PJLink power responses
+case "$resp" in
+    *"POWR=0"*)
+        echo "$script: projector is OFF (standby)" >&2
+        ;;
+    *"POWR=1"*)
+        echo "$script: projector is ON" >&2
+        ;;
+    *"POWR=2"*)
+        echo "$script: projector is COOLING" >&2
+        ;;
+    *"POWR=3"*)
+        echo "$script: projector is WARMING UP" >&2
+        ;;
+    *"POWR=OK"*)
+        echo "$script: PJLINK command was successful" >&2
+        ;;
+     *"POWR=ERR"*)
+        echo "$script: PJLINK error (ERR)" >&2
+        ;;
+    *)
+        echo "$script: unknown response '$resp'" >&2
+        ;;
 esac
