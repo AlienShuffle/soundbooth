@@ -1,19 +1,20 @@
 #!/bin/bash
 
-echo config-crestron.sh
-/opt/web-scripts/config-crestron.sh
+function run_script() {
+    local script="$(basename $1)"
+    local dst="/opt/web-scripts/$script"
+    if [ -x "$dst" ]; then
+        echo -e "---\n$script" >&2
+        "$dst"
+    else
+        echo "Error: $dst is not executable or does not exist." >&2
+    fi
+}
 
-echo ptz01-power-on.sh
-/opt/web-scripts/ptz01-power-on.sh
-
-echo ptz02-power-on.sh
-/opt/web-scripts/ptz02-power-on.sh
-
-echo projector-right-power-on.sh
-/opt/web-scripts/projector-right-power-on.sh
-
-echo projector-rear-power-on.sh
-/opt/web-scripts/projector-rear-power-on.sh
-
-echo projector-left-power-on.sh
-/opt/web-scripts/projector-left-power-on.sh
+run_script mojo-jojo
+run_script config-crestron.sh
+run_script ptz01-power-on.sh
+run_script ptz02-power-on.sh
+run_script projector-right-power-on.sh
+run_script projector-rear-power-on.sh
+run_script projector-left-power-on.sh
