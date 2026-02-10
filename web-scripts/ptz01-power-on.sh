@@ -21,7 +21,7 @@ esac
 # Build binary command
 TMP=$(mktemp)
 echo -n "$cmdString" | xxd -r -p >"$TMP"
-echo "Sending VISCA command to $camera:$viscaPort $cmdString ($cmd)" >&2
+echo "$script: Sending VISCA command to $camera ($cmd)" >&2
 # Send + receive over the same TCP connection
 # -w2 = 2-second timeout waiting for response
 resp=$(nc -w2 "$camera" "$viscaPort" <"$TMP" | xxd -p)
