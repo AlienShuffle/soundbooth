@@ -5,8 +5,6 @@ port=1024
 cmd=$(basename $0 | cut -d- -f3- | cut -d. -f1)
 script=$(basename $0)
 
-echo "Setting up command '$cmd' to projector at $device:$port" >&2
-
 case "$cmd" in
 "power-on")
     cmdString="PON"
@@ -24,10 +22,11 @@ case "$cmd" in
 esac
 
 # Open TCP session and capture the initial response
-echo "opening port $port to projector $device" >&2
-respOne=$(echo | nc $device $port | head -n1)
+echo "$script: Sending command to projector $device ($cmd)" >&2
+#echo "opening port $port to projector $device" >&2
+respOne=$(echo | nc -w 1 $device $port | head -n1)
 
-echo "Projector said: $respOne" >&2
+echo "$script: Projector said: $respOne" >&2
 
 if [[ "$respOne" =~ "NTCONTROL 1" ]]; then
     RAND=$(echo "$respOne" | awk '{print $3}')
@@ -36,10 +35,10 @@ if [[ "$respOne" =~ "NTCONTROL 1" ]]; then
 else
     CMD="00${cmdString}\r"
 fi
-echo "Sending command '$CMD' to projector" >&2
-respTwo=$(echo -e "$CMD" | nc -w2 $device $port)
+echo "$script: Sending command '$CMD' to projector" >&2
+respTwo=$(echo -e "$CMD" | nc -w 1 $device $port)
 
-echo "Projector said: '$respTwo'" >&2
+echo "$script: Projector said: '$respTwo'" >&2
 
 case "$respTwo" in
 "001")
