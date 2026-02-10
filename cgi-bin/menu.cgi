@@ -1,4 +1,5 @@
 #!/bin/bash
+# this is the cgi-bin/menu.cgi script that serves the main menu and also handles running selected scripts
 
 echo "Content-type: text/html"
 echo ""
@@ -34,7 +35,7 @@ if [ -n "$QUERY_STRING" ]; then
 
 <script>
     var output = document.getElementById("output");
-    var source = new EventSource("cgi-bin//exec.cgi?run=$SCRIPT");
+    var source = new EventSource("/cgi-bin/exec.cgi?run=$SCRIPT");
 
     source.onmessage = function(e) {
         if (e.data === "[DONE]") {

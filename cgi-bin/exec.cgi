@@ -1,6 +1,6 @@
 #!/bin/bash
+# this is the cgi-bin/exec.cgi script that runs the selected script and streams output as SSE
 
-# Get script name from query
 SCRIPT=$(echo "$QUERY_STRING" | sed 's/^run=//')
 
 # SSE headers
@@ -12,13 +12,12 @@ echo ""
 echo "data: Starting $SCRIPT.sh..."
 echo
 
-# Run the script and stream output as SSE
+# Execute script and stream its output
 stdbuf -o0 -e0 /opt/web-scripts/"$SCRIPT".sh 2>&1 | while IFS= read -r line; do
     echo "data: $line"
     echo
-    sleep 0.05 # helps smoothness and browser responsiveness
 done
 
-# End event
+# Send DONE message
 echo "data: [DONE]"
 echo
