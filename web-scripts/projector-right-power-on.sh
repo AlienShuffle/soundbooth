@@ -37,7 +37,7 @@ fi
 
 respTwo=$(echo -e "$CMD" | nc $device $port)
 
-echo "Projector said: $respTwo"
+echo "Projector said: '$respTwo'"
 
 case "$respTwo" in
 "001")
@@ -49,7 +49,7 @@ case "$respTwo" in
     exit 0
     ;;
 *)
-    echo "$0: error: $resp" >&2
+    echo "$0: error: '$respTwo'" >&2
     exit 1
     ;;
 esac

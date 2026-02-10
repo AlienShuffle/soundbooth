@@ -3,16 +3,14 @@
 echo "Content-type: text/html"
 echo ""
 
-# --- Handle script execution ---
+# If a script name was submitted, run it with live output
 if [ -n "$QUERY_STRING" ]; then
     SCRIPT=$(echo "$QUERY_STRING" | sed 's/^run=//')
-    OUTPUT=$("/opt/web-scripts/$SCRIPT.sh" 2>&1)
 
-    # create the command execution results page
     cat <<EOF
 <html>
 <head>
-<title>Command Execution Results</title>
+<title>Executing $SCRIPT</title>
 <style>
     body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
     .container {
@@ -33,17 +31,33 @@ if [ -n "$QUERY_STRING" ]; then
 </head>
 <body>
 <div class="container">
-    <h2>Executed: $SCRIPT.sh</h2>
-    <pre>$OUTPUT</pre>
-    <a href="/cgi-bin/menu.cgi" class="button">Back to Menu</a>
+<h2>Running: $SCRIPT.sh</h2>
+<pre>
+EOF
+
+    # Run the script and stream each line as it occurs
+    stdbuf -o0 -e0 /opt/web-scripts/"$SCRIPT".sh 2>&1 | while IFS= read -r line; do
+        echo "$line<br/>"
+        echo
+    done
+
+    cat <<EOF
+</pre>
+<br/>
+<a href="/cgi-bin/menu.cgi" class="button">Back to Menu</a>
 </div>
 </body>
 </html>
 EOF
+
     exit 0
 fi
 
-# --- Otherwise show menu ---
+
+###########################
+# MAIN MENU (STATIC HTML)
+###########################
+
 cat <<EOF
 <html>
 <head>
@@ -81,18 +95,20 @@ cat <<EOF
 <h1>CBC Soundbooth Control</h1>
 
 <!-- SOUND BOOTH -->
-<div class="section-title">Soundbooth</div>
+<div class="section-title">Soundbooth (Crestron, Cameras, Projectors)</div>
 <div class="button-grid">
-    <a href="/cgi-bin/menu.cgi?run=initial-soundbooth" class="cmd-btn">Initialize Soundbooth</a>
+    <a href="/cgi-bin/menu.cgi?run=initialize-soundbooth" class="cmd-btn">Initialize Soundbooth</a>
     <a href="/cgi-bin/menu.cgi?run=shutdown-soundbooth" class="cmd-btn">Shutdown Soundbooth</a>
     <a href="/cgi-bin/menu.cgi?run=config-crestron" class="cmd-btn">Configure Crestron</a>
 </div>
 
 <!-- PTZ CAMERAS -->
-<div class="section-title">PTZ Cameras</div>
+<div class="section-title">PTZ01 Camera</div>
 <div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-on" class="cmd-btn">PTZ01 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz01-power-standby" class="cmd-btn">PTZ01 Standby</a>
+<div class="section-title">PTZ02 Camera</div>
+<div class="button-grid">
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-on" class="cmd-btn">PTZ02 Power On</a>
     <a href="/cgi-bin/menu.cgi?run=ptz02-power-standby" class="cmd-btn">PTZ02 Standby</a>
 </div>

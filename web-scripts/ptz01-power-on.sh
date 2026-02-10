@@ -34,7 +34,7 @@ case "$resp" in
     ;;
 
 *)
-    echo "$0: error: $resp" >&2
+    echo "$0: error: $resp (likely already in $cmd state)" >&2
     exit 1
     ;;
 esac
