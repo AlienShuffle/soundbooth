@@ -32,7 +32,6 @@ if [ -n "$QUERY_STRING" ]; then
 <h2>Running: $SCRIPT.sh</h2>
 
 <pre id="output">(waiting for output...)</pre>
-<br/>
 <script>
     var output = document.getElementById("output");
     var source = new EventSource("/cgi-bin/exec.cgi?run=$SCRIPT");
