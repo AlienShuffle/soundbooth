@@ -35,6 +35,6 @@
     echo -ne "bye\r"
 ) |
     pv -qL 8 |
-    telnet dmmd8x8.cbclocal
+#    telnet dmmd8x8.cbclocal
     # alternative is nc, needs to be tested.
-    # nc -N -w2 dmmd8x8.cbclocal 23 
+ nc -q 1 dmmd8x8.cbclocal 23 
