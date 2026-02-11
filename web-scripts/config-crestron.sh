@@ -13,7 +13,7 @@
 # Output 17-20 (1-4) = 3 Projectors and the Lobby LCD
 (
     sleep 1
-    # these early commands get eaten by the CLI for some reason and gives error.
+    # these early commands get eaten by the CLI for some reason and give errors.
     echo -ne "echo\r"
     sleep 1
     echo -ne "echo\r"
@@ -34,7 +34,4 @@
     sleep 1
     echo -ne "bye\r"
 ) |
-    pv -qL 8 |
-#    telnet dmmd8x8.cbclocal
-    # alternative is nc, needs to be tested.
- nc -q 1 dmmd8x8.cbclocal 23 
+    pv -qL 8 | nc -q 1 dmmd8x8.cbclocal 23 
