@@ -145,9 +145,7 @@ cat <<EOF
 
 <div class="section-title">Maintenance</div>
 <div class="button-grid">
-    <a href="/cgi-bin/menu.cgi?run=backup" class="cmd-btn">Run Backup</a>
-    <a href="/cgi-bin/menu.cgi?run=cleanup" class="cmd-btn">Cleanup Logs</a>
-    <a href="/cgi-bin/menu.cgi?run=restart" class="cmd-btn">Restart Service</a>
+    <a href="https://github.com/AlienShuffle/soundbooth" target="_blank" class="cmd-btn">GitHub</a>
 </div>
 </div>
 </body>
