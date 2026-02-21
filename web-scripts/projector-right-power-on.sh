@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 # PJLink control script for Panasonic VMZ71/VMZ51 series
 
+# sample command name: project-rear-power-standby.sh
+
+# device name is embedded in bash file name.
+# this scheme is used to reduce complexity in the cgi-bin calls.
 device="$(basename $0 | cut -d- -f1-2).cbclocal"
+# parse command out.
 cmd=$(basename $0 | cut -d- -f3- | cut -d. -f1)
 script=$(basename "$0")
 port=4352
