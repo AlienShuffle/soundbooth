@@ -1,5 +1,21 @@
 # CBC Soundbooth Automation Website
 This repository stores a very simple Apache-based cgi-bin website that presents a set of default actions that can support soundbooth startup and shutdown with additional tasks to support project, camera and Crestron media switchers.
+# Steps to image the Raspberry Pi 4 with Ubuntu 24.04 LTS
+On another machine:
+Download Raspberry Pi Imager: https://www.raspberrypi.com/software/
+
+Choose:
+```
+OS → Ubuntu → Ubuntu Server 24.04 LTS (64‑bit)
+Storage → your SD card or USB SSD
+```
+⚙️ Advanced settings (recommended)
+
+✅ Set hostname
+✅ Enable SSH
+✅ Create your primary user + password
+✅ Configure Wi‑Fi (if you’ll need it headless)
+Leave everything else default
 # Deployment model
 Currently, the site is deployed to a local Raspberry Pi 4 running in the data closet at CBC.
 It can be reached on the intranet @ http://cbc-pi.cbclocal
