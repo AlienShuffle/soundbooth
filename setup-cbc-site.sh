@@ -4,6 +4,10 @@
 # single file to be edited for all cameras, while still having separate files
 # for each camera's power on/off actions.
 #
+
+# install apps
+sudo apt install pv
+
 function link_file() {
     local src="$1"
     local dst="$2"
