@@ -1,0 +1,1 @@
+sudo apt install -yq twingate-connector
